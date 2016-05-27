@@ -1,0 +1,22 @@
+<h2>Server status:
+	<check if="{{ @pushconfig.enabled }}">
+		<true>
+			<check if="{{ @push_socket_status }}">
+				<true>
+					<span class="label label-success">Online</span>
+				</true>
+				<false>
+					<span class="label label-danger">Offline</span>
+				</false>
+			</check>
+		</true>
+		<false>
+			<span class="label label-default">Disabled</span>
+		</false>
+	</check>
+</h2>
+<br>
+<p>
+	Server can be started with this command:<br>
+	<code>{{ `which php` }} {{ dirname(__DIR__) }}/app/plugin/push/bin/push-server.php</code>
+</p>
