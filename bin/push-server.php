@@ -1,6 +1,8 @@
 #!/usr/bin/php
 <?php
 use Ratchet\Server\IoServer;
+use Ratchet\Http\HttpServer;
+use Ratchet\WebSocket\WsServer;
 use Push\Server;
 
 chdir(__DIR__);
@@ -13,7 +15,11 @@ if(!$config['enabled']) {
 }
 
 $server = IoServer::factory(
-    new Server(),
+    new HttpServer(
+        new WsServer(
+  		  new Server()
+  		)
+  	),
     $config['port']
 );
 

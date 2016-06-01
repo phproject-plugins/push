@@ -31,6 +31,7 @@ class Base extends \Plugin {
 					$log->write("Failed to create socket connection: [$err] $str");
 					$f3->set("error", "An error occurred connecting to the push server.");
 				}
+				socket_write($this->_socket, "TEST MESSAGE");
 			}
 		}
 		return $this->_socket;
@@ -48,6 +49,10 @@ class Base extends \Plugin {
 		$config = require("config.php");
 		$config = $config + array("host" => $f3->get("HOST"));
 		$f3->set("pushconfig", $config);
+		if(@$config["enabled"]) {
+			$this->_addJs("<script>var pushclient_port = {$config['port']};</script>", "code");
+			$this->_addJs($f3->get("BASE") . "/app/plugin/push/js/push-client.js", "file");
+		}
 	}
 
 	/**
